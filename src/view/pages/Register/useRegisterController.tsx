@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { authService } from "../../../app/services/authService";
 
+
 const schema = z.object({
   name: z.string().min(3, 'Nome deve conter pelo menos 3 letras'),
   email: z.string().min(1, 'Email é obrigatório').email('Informe um email válido'),
