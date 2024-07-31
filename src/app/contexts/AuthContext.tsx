@@ -1,5 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { createContext, useCallback, useState } from "react";
 import { localStorageKeys } from "../config/localStorageKeys";
+import { usersService } from "../services/usersService";
 
 export interface AuthContextValue{
   signedIn: boolean;
@@ -16,8 +18,15 @@ export function AuthProvider({children}: {children: React.ReactNode}){
     return !!storedAccessToken
   });
 
+  useQuery({
+    queryKey: ['users', 'me'],
+    queryFn: () => usersService.me(),
+    enabled: signedIn,
+  });
+
   const signin = useCallback((accessToken: string) => {
     localStorage.setItem(localStorageKeys.ACCESS_TOKEN, accessToken);
+
     setSignedIn(true);
   }, []);
 
