@@ -172,6 +172,9 @@ export default {
           800: '#E8590C',
           900: '#D9480F',
         },
+      },
+      animation: {
+        'bounce-slow': 'bounce 2s infinite',
       }
     },
   },
