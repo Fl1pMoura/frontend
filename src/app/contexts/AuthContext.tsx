@@ -20,7 +20,7 @@ export function AuthProvider({children}: {children: React.ReactNode}){
     return !!storedAccessToken
   });
 
-  const { isError, data, isFetching, isSuccess,} = useQuery({
+  const { isError, isFetching, isSuccess,} = useQuery({
     queryKey: ['users', 'me'],
     queryFn: () => usersService.me(),
     enabled: signedIn,
@@ -42,9 +42,6 @@ export function AuthProvider({children}: {children: React.ReactNode}){
 
   }, [queryClient]);
 
-
-
-
   useEffect(() => {
     if(isError){
       toast.error('Sua sessão expirou')
@@ -54,7 +51,6 @@ export function AuthProvider({children}: {children: React.ReactNode}){
 
   return (
   <AuthContext.Provider value={{ signedIn: isSuccess && signedIn, signin, signout }}>
-    <h1>{ data?.email }</h1>
     <LaunchScreen isLoading={isFetching}/>
     {!isFetching && children}
   </AuthContext.Provider>
