@@ -1,6 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { EyeIcon } from "../../../components/icons/EyeIcon";
+import { AccountCard } from "./AccountCard";
 
 export function Accounts(){
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,7 @@ export function Accounts(){
       </div>
 
       <div className="flex-1 flex flex-col justify-end">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <strong className="tracking-[-1px] text-lg">Minhas Contas</strong>
             <div>
               <button disabled className="py-3 pr-3.5 pl-2.5 rounded-full transition-colors enabled:hover:bg-black/10 disabled:opacity-40">
@@ -31,7 +32,9 @@ export function Accounts(){
               </button>
             </div>
           </div>
-          <div>contas</div>
+          <div className="mt-4">
+            <AccountCard balance={1000} color="#7950F2" name="Nubank" type="CASH"/>
+          </div>
       </div>
 
     </div>
