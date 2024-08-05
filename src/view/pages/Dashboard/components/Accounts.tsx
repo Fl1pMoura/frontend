@@ -1,7 +1,9 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
+import 'swiper/css';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { EyeIcon } from "../../../components/icons/EyeIcon";
 import { AccountCard } from "./AccountCard";
+import AccountsSliderNavigation from "./AccountsSliderNavigation";
 
 export function Accounts(){
   const [isOpen, setIsOpen] = useState(false);
@@ -21,22 +23,28 @@ export function Accounts(){
       </div>
 
       <div className="flex-1 flex flex-col justify-end">
-          <div className="flex justify-between items-center">
+       <Swiper
+            spaceBetween={16}
+            slidesPerView={2.1}
+            className="max-w-full"
+            >
+          <div className="flex justify-between items-center mb-4" slot="container-start">
             <strong className="tracking-[-1px] text-lg">Minhas Contas</strong>
-            <div>
-              <button disabled className="py-3 pr-3.5 pl-2.5 rounded-full transition-colors enabled:hover:bg-black/10 disabled:opacity-40">
-                <ChevronLeftIcon className="h-6 w-6"/>
-              </button>
-              <button className="py-3 pr-3.5 pl-2.5 rounded-full transition-colors enabled:hover:bg-black/10 disabled:opacity-40">
-                <ChevronRightIcon className="h-6 w-6"/>
-              </button>
-            </div>
+            <AccountsSliderNavigation />
           </div>
-          <div className="mt-4">
-            <AccountCard balance={1000} color="#7950F2" name="Nubank" type="CASH"/>
+          <div>
+              <SwiperSlide>
+                <AccountCard balance={1000} color="#7950F2" name="Nubank" type="CHECKING"/>
+              </SwiperSlide>
+              <SwiperSlide>
+                <AccountCard balance={1000} color="#7950F2" name="Inter" type="INVESTMENT"/>
+              </SwiperSlide>
+              <SwiperSlide>
+                <AccountCard balance={1000} color="#7950F2" name="Carteira" type="CASH"/>
+              </SwiperSlide>
           </div>
+            </Swiper>
       </div>
-
     </div>
   )
 }
