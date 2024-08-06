@@ -1,12 +1,14 @@
 import { useState } from "react";
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EyeIcon } from "../../../components/icons/EyeIcon";
+import { EyeIcon } from "../../../../components/icons/EyeIcon";
 import { AccountCard } from "./AccountCard";
 import AccountsSliderNavigation from "./AccountsSliderNavigation";
+import { useAccountController } from "./useAccountController";
 
 export function Accounts(){
   const [isOpen, setIsOpen] = useState(false);
+  const { setSliderState, sliderState } = useAccountController()
   function handleShowBalance(){
     setIsOpen(!isOpen);
   }
@@ -27,10 +29,11 @@ export function Accounts(){
             spaceBetween={16}
             slidesPerView={2.1}
             className="max-w-full"
+            onSlideChange={swiper => setSliderState({isBeginning: swiper.isBeginning, isEnd: swiper.isEnd})}
             >
           <div className="flex justify-between items-center mb-4" slot="container-start">
             <strong className="tracking-[-1px] text-lg">Minhas Contas</strong>
-            <AccountsSliderNavigation />
+            <AccountsSliderNavigation isBeggining={sliderState.isBeginning} isEnd={sliderState.isEnd}/>
           </div>
           <div>
               <SwiperSlide>
