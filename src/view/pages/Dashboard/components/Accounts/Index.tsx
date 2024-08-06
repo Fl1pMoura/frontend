@@ -8,7 +8,7 @@ import { useAccountController } from "./useAccountController";
 
 export function Accounts(){
   const [isOpen, setIsOpen] = useState(false);
-  const { setSliderState, sliderState } = useAccountController()
+  const { setSliderState, sliderState, windowWidth} = useAccountController()
   function handleShowBalance(){
     setIsOpen(!isOpen);
   }
@@ -24,10 +24,10 @@ export function Accounts(){
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col justify-end">
+      <div className="flex-1 flex flex-col justify-end mt-10 lg:mt-0">
        <Swiper
             spaceBetween={16}
-            slidesPerView={2.1}
+            slidesPerView={windowWidth >= 600 ? 2.1 : 1.2}
             className="max-w-full"
             onSlideChange={swiper => setSliderState({isBeginning: swiper.isBeginning, isEnd: swiper.isEnd})}
             >
