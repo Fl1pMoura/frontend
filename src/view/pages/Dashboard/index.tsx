@@ -11,7 +11,7 @@ export function Dashboard(){
         <Logo className="max-w-[106px] text-teal-900"/>
         <UserMenu/>
       </header>
-      <div className="flex-1 flex flex-col gap-8 lg:gap-4 lg:flex-row">
+      <div className="max-h-full flex-1 flex flex-col gap-8 lg:gap-4 lg:flex-row">
         <section className="w-full lg:w-1/2">
           <Accounts/>
         </section>
