@@ -11,5 +11,5 @@ export function useAccountController(){
 
   const { areValuesVisible, toggleValuesVisibility} = useDashboard();
 
-  return {sliderState, setSliderState, windowWidth, areValuesVisible, toggleValuesVisibility}
+  return {sliderState, setSliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isFetching: false, accounts: []}
 }
