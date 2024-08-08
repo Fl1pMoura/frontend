@@ -1,11 +1,13 @@
 import { Logo } from "../../components/Logo";
 import { UserMenu } from "../../components/UserMenu";
 import { Accounts } from "./components/Accounts/Index";
+import { DashboardProvider } from "./components/DashboardContext";
 import { Transactions } from "./components/Transactions/Index";
 
 
 export function Dashboard(){
   return (
+    <DashboardProvider>
     <section className="h-full w-full flex flex-col p-4 gap-2 lg:gap-4 lg:p-8 lg:pt-6">
       <header className="flex justify-between min-h-12 items-center ">
         <Logo className="max-w-[106px] text-teal-900"/>
@@ -20,5 +22,6 @@ export function Dashboard(){
         </section>
       </div>
     </section>
+    </DashboardProvider>
   )
 }
