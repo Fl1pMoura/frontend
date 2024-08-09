@@ -12,7 +12,7 @@ export function Fab(){
         <PlusIcon className="size-6"/>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content>
+      <DropdownMenu.Content sideOffset={4}>
         <DropdownMenu.Item>
           <Income/>
           Nova Despesa
