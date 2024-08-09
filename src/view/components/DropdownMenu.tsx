@@ -20,7 +20,7 @@ function DropdownMenuTrigger({children, className} : {children: React.ReactNode,
 function DropdownMenuContent({children, className} : {children: React.ReactNode, className?: string}){
   return(
     <RdxDropdownMenu.Portal>
-      <RdxDropdownMenu.Content className={cn("bg-white rounded-2xl border-gray-100 border p-2 space-y-2 shadow-black/10 shadow-lg data-[side=bottom]:animate-slide-up-and-fade", className)}>
+      <RdxDropdownMenu.Content className={cn("z-50 bg-white rounded-2xl border-gray-100 border p-2 space-y-2 shadow-black/10 shadow-lg data-[side=bottom]:animate-slide-up-and-fade", className)}>
         {children}
       </RdxDropdownMenu.Content>
     </RdxDropdownMenu.Portal>
@@ -32,7 +32,7 @@ function DropdownMenuItem({children, className, onSelect} : {children: React.Rea
     <RdxDropdownMenu.Item
     onSelect={onSelect}
     className={cn(
-      'cursor-pointer min-h-12 p-3 flex items-center gap-2 outline-none text-gray-800 text-sm font-medium rounded-2xl transition-all data-[highlighted]:bg-gray-50',
+      'cursor-pointer min-h-12 py-2 px-3 flex items-center gap-2 outline-none text-gray-800 text-sm font-medium rounded-2xl transition-all data-[highlighted]:bg-gray-50',
       className)
       }>
       {children}
