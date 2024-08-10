@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDashboard } from "../DashboardContext/useDashboard";
 
 export function useTransactionsController(){
-  const [isModalVisible, setIsModalVisible] = useState(true)
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const { areValuesVisible } = useDashboard();
 
   function handleModalVisibility(){

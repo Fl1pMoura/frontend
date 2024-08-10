@@ -5,12 +5,14 @@ import { cn } from '../../../../../app/utils/cn';
 import { formatCurrency } from '../../../../../app/utils/formatCurrency';
 import { EyeIcon } from '../../../../components/icons/EyeIcon';
 import { Spinner } from '../../../../components/Spinner';
+import { useDashboard } from '../DashboardContext/useDashboard';
 import { AccountCard } from './AccountCard';
 import AccountsSliderNavigation from './AccountsSliderNavigation';
 import { useAccountController } from "./useAccountController";
 
 export function Accounts(){
   const { setSliderState, sliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isFetching, accounts} = useAccountController()
+  const { toggleNewAccountModalVisility } = useDashboard();
 
   return (
     <div className="w-full h-full bg-teal-900 rounded-2xl flex flex-col py-8 px-4 lg:p-10 text-white">
@@ -41,7 +43,7 @@ export function Accounts(){
               {accounts.length === 0 && (
                 <div className="mb-4" slot="container-start">
                   <strong className="tracking-[-1px] text-lg">Minhas Contas</strong>
-                  <button className='w-full px-4 py-12 border-2 border-dashed border-teal-600 rounded-2xl mt-4 flex flex-col items-center justify-center gap-4'>
+                  <button onClick={toggleNewAccountModalVisility} className='w-full px-4 py-12 border-2 border-dashed border-teal-600 rounded-2xl mt-4 flex flex-col items-center justify-center gap-4'>
                     <div className='w-11 h-11 border-2 border-dashed border-white rounded-full flex items-center justify-center text-white'>
                       <PlusIcon className='w-6 h-6'/>
                     </div>
