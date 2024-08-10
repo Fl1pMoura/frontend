@@ -1,4 +1,5 @@
 import { Logo } from "../../components/Logo";
+import { Modal } from "../../components/Modal";
 import { UserMenu } from "../../components/UserMenu";
 import { Accounts } from "./components/Accounts/Index";
 import { DashboardProvider } from "./components/DashboardContext";
@@ -22,6 +23,9 @@ export function Dashboard(){
           <Transactions/>
         </section>
       </div>
+      <Modal open title="Receitas">
+        a
+      </Modal>
       <Fab/>
     </section>
     </DashboardProvider>
