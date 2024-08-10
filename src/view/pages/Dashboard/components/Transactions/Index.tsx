@@ -6,17 +6,17 @@ import emptyStateImage from "../../../../../assets/empty-state.svg";
 import { Spinner } from "../../../../components/Spinner";
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
+import { FiltersModal } from "./FiltersModal";
 import { SliderNavigation } from "./SliderNavigation";
 import { SliderOptions } from "./SliderOptions";
 import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { useTransactionsController } from "./useTransactionsController";
 
 export function Transactions(){
-  const { areValuesVisible, isInitialFetching, transactions, isFetching } = useTransactionsController();
+  const { areValuesVisible, isInitialFetching, transactions, isFetching, handleModalVisibility, isModalVisible } = useTransactionsController();
 
   return (
     <div className="w-full h-full bg-gray-100 rounded-2xl px-4 pt-6 pb-[136px] lg:p-10 max-h-full flex flex-col">
-
       {isInitialFetching && (
         <div className='h-full w-full flex items-center justify-center'>
           <Spinner className="w-12 h-12"/>
@@ -25,9 +25,10 @@ export function Transactions(){
 
       {!isInitialFetching && (
         <>
+          <FiltersModal handleModalVisibility={handleModalVisibility} isModalVisible={isModalVisible}/>
           <div className="flex justify-between">
             <TransactionTypeDropdown/>
-            <button className="h-12 w-12 flex items-center justify-center">
+            <button onClick={handleModalVisibility} className="h-12 w-12 flex items-center justify-center">
               <FilterIcon/>
               </button>
           </div>

@@ -6,12 +6,13 @@ interface ModalProps{
   open: boolean,
   children: React.ReactNode,
   title: string,
-  rightAction?: React.ReactNode
+  rightAction?: React.ReactNode,
+  onClose(): void,
 }
 
-export function Modal({ children, open, title, rightAction }: ModalProps){
+export function Modal({ children, open, title, rightAction, onClose}: ModalProps){
   return (
-      <Dialog.Root open={open}>
+      <Dialog.Root open={open} onOpenChange={onClose}>
         <Dialog.Portal>
           <Dialog.Overlay
           className={cn(
@@ -23,7 +24,12 @@ export function Modal({ children, open, title, rightAction }: ModalProps){
             "data-[state=open]:animate-content-show"
           )}>
             <header className='flex items-center justify-between text-gray-800'>
-              <button className='size-12 flex items-center justify-center outline-none'><Cross2Icon className='size-6'/></button>
+              <button
+                className='size-12 flex items-center justify-center outline-none'
+                onClick={onClose}
+                >
+                <Cross2Icon className='size-6'/>
+              </button>
               <Dialog.Title className='text-lg font-bold tracking-[-1px]'>{ title }</Dialog.Title>
               <button className='size-12 flex items-center justify-center outline-none'>{rightAction}</button>
             </header>
