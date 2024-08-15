@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { cn } from '../../app/utils/cn';
 
 interface SelectProps{
+  value?: string,
+  onChange?(value: string): void,
   className ?: string,
   error?: string,
   placeholder?: string,
@@ -13,17 +15,18 @@ interface SelectProps{
   }[],
 }
 
-export function Select({ className, error, placeholder, options }: SelectProps){
- const [selectedValue, setSelectedValue] = useState("")
+export function Select({ className, error, placeholder, options, onChange, value }: SelectProps){
+ const [selectedValue, setSelectedValue] = useState(value)
 
   function handleSelect(value: string){
     setSelectedValue(value);
+    onChange?.(value)
   }
 
   return(
-    <>
+    <div>
         <div className="relative">
-            <RdxSelect.Root onValueChange={handleSelect}>
+            <RdxSelect.Root value={value} onValueChange={handleSelect}>
                 <RdxSelect.Trigger
                 className={cn(
                   "bg-white px-3 border border-gray-500 rounded-lg h-[52px] w-full text-gray-800 placeholder-shown:pt-0 focus:border-gray-800 hover:border-teal-900 outline-none peer transition-all relative text-left pt-4",
@@ -76,6 +79,6 @@ export function Select({ className, error, placeholder, options }: SelectProps){
               <span className="text-left w-full block text-xs">{error}</span>
             </div>
           )}
-    </>
+    </div>
   )
 }

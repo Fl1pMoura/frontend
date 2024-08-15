@@ -25,11 +25,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         error && '!border-red-900'
       )}
       />
+
       <label htmlFor={inputId}
       className="absolute left-[13px] top-2 -translate-y-0 text-gray-700 pointer-events-none text-xs peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base transition-all"
       >
         {placeholder}
       </label>
+
       {error &&(
         <div className='flex gap-2 items-center mt-2 text-red-900'>
             <CrossCircledIcon/>
