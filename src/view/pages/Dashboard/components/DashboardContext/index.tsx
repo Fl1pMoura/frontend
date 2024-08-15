@@ -2,11 +2,11 @@ import { createContext, useCallback, useEffect, useState } from "react";
 
 export interface DashboardContextValue {
   areValuesVisible: boolean,
-  toggleValuesVisibility(): void,
+  toggleValuesVisibility(value?: boolean): void,
   isNewAccountModalVisible: boolean,
   isTransactionModalVisible: boolean,
   newTransactionType: "INCOME" | "EXPENSE" | null,
-  toggleNewAccountModalVisility(): void,
+  toggleNewAccountModalVisility(value?: boolean): void,
   toggleTransactionModalVisility(type: "INCOME" | "EXPENSE"): void,
 }
 

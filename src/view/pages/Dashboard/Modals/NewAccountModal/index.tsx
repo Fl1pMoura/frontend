@@ -8,7 +8,7 @@ import { Select } from "../../../../components/Select";
 import { useNewAccountModal } from "./useNewAccountModal";
 
 export function NewAccountModal(){
-  const { isNewAccountModalVisible, toggleNewAccountModalVisility, errors, handleSubmit, register, control } = useNewAccountModal();
+  const { isNewAccountModalVisible, toggleNewAccountModalVisility, errors, handleSubmit, register, control, isPending } = useNewAccountModal();
 
   return(
     <Modal open={isNewAccountModalVisible} title="Nova Conta" onClose={toggleNewAccountModalVisility}>
@@ -19,7 +19,7 @@ export function NewAccountModal(){
             <span className="text-lg text-gray-600 tracking-[-0.5px]">R$</span>
             <Controller
             name="initialBalance"
-            defaultValue="0,00"
+            defaultValue="0"
             control={control}
             render = {({field: {onChange, value}}) => (
               <InputCurrency value={value} onChange={onChange} error={ errors.initialBalance?.message } />
@@ -66,7 +66,7 @@ export function NewAccountModal(){
           />
 
         </div>
-        <Button disabled={false} className="w-full h-14 mt-6">
+        <Button isLoading={isPending} disabled={false} className="w-full h-14 mt-6">
               Salvar
         </Button>
       </form>
