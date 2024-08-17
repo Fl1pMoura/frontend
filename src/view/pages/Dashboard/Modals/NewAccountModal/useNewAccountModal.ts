@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -17,7 +17,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function useNewAccountModal(){
-  const { toggleNewAccountModalVisility, isNewAccountModalVisible} = useDashboard();
+  const queryClient = useQueryClient()
+  const { toggleNewAccountModalVisibility, isNewAccountModalVisible, isEditing } = useDashboard();
 
   const { handleSubmit: hookFormHandleSubmit, register, formState:{errors}, control, reset} = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -41,13 +42,14 @@ export function useNewAccountModal(){
 
       await mutateAsync(updatedData);
 
+      queryClient.invalidateQueries({ queryKey: ['bankAccounts']});
       toast.success("Conta cadastrada com sucesso!")
-      toggleNewAccountModalVisility(false)
+      toggleNewAccountModalVisibility(false)
       reset();
     } catch (error) {
       toast.error("Houve um erro ao cadastrar sua conta!")
     }
   });
 
-  return { toggleNewAccountModalVisility, isNewAccountModalVisible, handleSubmit, register, errors, control, isPending }
+  return { toggleNewAccountModalVisibility, isNewAccountModalVisible, handleSubmit, register, errors, control, isPending, isEditing }
 }

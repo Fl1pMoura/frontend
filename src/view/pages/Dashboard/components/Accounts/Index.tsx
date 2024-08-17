@@ -11,8 +11,8 @@ import AccountsSliderNavigation from './AccountsSliderNavigation';
 import { useAccountController } from "./useAccountController";
 
 export function Accounts(){
-  const { setSliderState, sliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isFetching, accounts} = useAccountController()
-  const { toggleNewAccountModalVisility } = useDashboard();
+  const { setSliderState, sliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isFetching, accounts, currentBalance} = useAccountController()
+  const { toggleNewAccountModalVisibility } = useDashboard();
 
   return (
     <div className="w-full h-full bg-teal-900 rounded-2xl flex flex-col py-8 px-4 lg:p-10 text-white">
@@ -32,7 +32,7 @@ export function Accounts(){
                 "text-2xl tracking-[-1px] transition-all",
                 !areValuesVisible && "blur-md"
                 )}>
-                  {formatCurrency(100)}
+                  {formatCurrency(currentBalance)}
               </strong>
               <button onClick={toggleValuesVisibility} className="p-2">
                 <EyeIcon open={!areValuesVisible}/>
@@ -43,7 +43,7 @@ export function Accounts(){
               {accounts.length === 0 && (
                 <div className="mb-4" slot="container-start">
                   <strong className="tracking-[-1px] text-lg">Minhas Contas</strong>
-                  <button onClick={toggleNewAccountModalVisility} className='w-full px-4 py-12 border-2 border-dashed border-teal-600 rounded-2xl mt-4 flex flex-col items-center justify-center gap-4'>
+                  <button onClick={toggleNewAccountModalVisibility} className='w-full px-4 py-12 border-2 border-dashed border-teal-600 rounded-2xl mt-4 flex flex-col items-center justify-center gap-4'>
                     <div className='w-11 h-11 border-2 border-dashed border-white rounded-full flex items-center justify-center text-white'>
                       <PlusIcon className='w-6 h-6'/>
                     </div>
@@ -56,7 +56,7 @@ export function Accounts(){
                     <Swiper
                     spaceBetween={16}
                     slidesPerView={windowWidth >= 600 ? 2.1 : 1.2}
-                    className="max-w-full"
+                    className="max-w-full w-full"
                     onSlideChange={swiper => setSliderState({isBeginning: swiper.isBeginning, isEnd: swiper.isEnd})}
                     >
                   <div className="flex justify-between items-center mb-4" slot="container-start">
@@ -64,15 +64,12 @@ export function Accounts(){
                     <AccountsSliderNavigation isBeggining={sliderState.isBeginning} isEnd={sliderState.isEnd}/>
                   </div>
                   <div>
-                      <SwiperSlide>
-                        <AccountCard balance={1000} color="#7950F2" name="Nubank" type="CHECKING"/>
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <AccountCard balance={1000} color="#7950F2" name="Inter" type="INVESTMENT"/>
-                      </SwiperSlide>
-                      <SwiperSlide>
-                        <AccountCard balance={1000} color="#7950F2" name="Carteira" type="CASH"/>
-                      </SwiperSlide>
+
+                    {accounts.map(account => (
+                      <SwiperSlide key={account.id} className='w-full'>
+                      <AccountCard data={account}/>
+                    </SwiperSlide>
+                    ))}
                   </div>
                     </Swiper>
               )}

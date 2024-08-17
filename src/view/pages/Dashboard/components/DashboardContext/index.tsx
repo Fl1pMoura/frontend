@@ -6,8 +6,9 @@ export interface DashboardContextValue {
   isNewAccountModalVisible: boolean,
   isTransactionModalVisible: boolean,
   newTransactionType: "INCOME" | "EXPENSE" | null,
-  toggleNewAccountModalVisility(value?: boolean): void,
+  toggleNewAccountModalVisibility(isEditing?: boolean): void,
   toggleTransactionModalVisility(type: "INCOME" | "EXPENSE"): void,
+  isEditing?: boolean,
 }
 
 export const DashboardContext = createContext({} as DashboardContextValue);
@@ -18,6 +19,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     return savedValue ? JSON.parse(savedValue) : true;
   });
   const [isNewAccountModalVisible, setIsNewAccountModalVisible] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
   const [isTransactionModalVisible, setIsTransactionModalVisible] = useState(false)
   const [newTransactionType, setNewTransactionType] = useState<"INCOME" | "EXPENSE" | null>(null)
 
@@ -25,9 +27,12 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     setAreValuesVisible((prevState: boolean) => !prevState);
   }, []);
 
-  const toggleNewAccountModalVisility = useCallback(() => {
-    setIsNewAccountModalVisible((prevState: boolean) => !prevState)
-  },[])
+  const toggleNewAccountModalVisibility = useCallback((isEditing?: boolean) => {
+    setIsNewAccountModalVisible((prevState: boolean) => !prevState);
+    if (isEditing !== undefined) {
+      setIsEditing(isEditing);
+    }
+  }, []);
 
   const toggleTransactionModalVisility = useCallback((type: "INCOME" | "EXPENSE") => {
     setNewTransactionType(type)
@@ -44,8 +49,9 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
         newTransactionType,
        toggleValuesVisibility,
        isNewAccountModalVisible,
-       toggleNewAccountModalVisility,
+       toggleNewAccountModalVisibility,
        isTransactionModalVisible,
+       isEditing,
        toggleTransactionModalVisility }}>
       {children}
     </DashboardContext.Provider>

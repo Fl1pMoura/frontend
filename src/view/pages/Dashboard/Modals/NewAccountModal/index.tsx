@@ -8,10 +8,10 @@ import { Select } from "../../../../components/Select";
 import { useNewAccountModal } from "./useNewAccountModal";
 
 export function NewAccountModal(){
-  const { isNewAccountModalVisible, toggleNewAccountModalVisility, errors, handleSubmit, register, control, isPending } = useNewAccountModal();
+  const { isNewAccountModalVisible, toggleNewAccountModalVisibility, errors, handleSubmit, register, control, isPending, isEditing } = useNewAccountModal();
 
   return(
-    <Modal open={isNewAccountModalVisible} title="Nova Conta" onClose={toggleNewAccountModalVisility}>
+    <Modal open={isNewAccountModalVisible} title={!isEditing?"Nova Conta":"Editar Conta" }onClose={toggleNewAccountModalVisibility}>
       <form onSubmit={handleSubmit}>
         <div>
           <span className="text-xs text-gray-600">Saldo inicial</span>

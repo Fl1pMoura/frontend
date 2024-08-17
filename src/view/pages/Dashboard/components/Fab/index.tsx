@@ -7,7 +7,7 @@ import { Income } from "../../../../components/icons/categories/income/Income";
 import { useDashboard } from "../DashboardContext/useDashboard";
 
 export function Fab(){
-  const { toggleNewAccountModalVisility, toggleTransactionModalVisility } = useDashboard();
+  const { toggleNewAccountModalVisibility, toggleTransactionModalVisility } = useDashboard();
   return(
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="fixed bottom-4 right-4 size-12 rounded-full bg-teal-900 text-white flex items-center justify-center">
@@ -23,7 +23,7 @@ export function Fab(){
           <Income/>
           Nova Receita
         </DropdownMenu.Item>
-        <DropdownMenu.Item onSelect={toggleNewAccountModalVisility}>
+        <DropdownMenu.Item onSelect={() => toggleNewAccountModalVisibility(false)}>
           <BankAccountIcon/>
           Nova Conta
         </DropdownMenu.Item>
