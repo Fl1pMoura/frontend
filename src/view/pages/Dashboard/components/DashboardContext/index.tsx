@@ -1,4 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from "react";
+import { BankAccounts } from "../../../../../app/entities/BankAccount";
 
 export interface DashboardContextValue {
   areValuesVisible: boolean,
@@ -6,9 +7,10 @@ export interface DashboardContextValue {
   isNewAccountModalVisible: boolean,
   isTransactionModalVisible: boolean,
   newTransactionType: "INCOME" | "EXPENSE" | null,
-  toggleNewAccountModalVisibility(isEditing?: boolean): void,
+  toggleNewAccountModalVisibility(bankAccount?: BankAccounts): void,
   toggleTransactionModalVisility(type: "INCOME" | "EXPENSE"): void,
-  isEditing?: boolean,
+  accountBeingEdited: null | BankAccounts
+  isEditModal: boolean
 }
 
 export const DashboardContext = createContext({} as DashboardContextValue);
@@ -19,18 +21,22 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     return savedValue ? JSON.parse(savedValue) : true;
   });
   const [isNewAccountModalVisible, setIsNewAccountModalVisible] = useState(false)
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditModal, setIsEditModal] = useState(false)
   const [isTransactionModalVisible, setIsTransactionModalVisible] = useState(false)
+  const [accountBeingEdited, setAccountBeingEdited] = useState<null | BankAccounts>(null);
   const [newTransactionType, setNewTransactionType] = useState<"INCOME" | "EXPENSE" | null>(null)
 
   const toggleValuesVisibility = useCallback(() => {
     setAreValuesVisible((prevState: boolean) => !prevState);
   }, []);
 
-  const toggleNewAccountModalVisibility = useCallback((isEditing?: boolean) => {
+  const toggleNewAccountModalVisibility = useCallback((bankAccount?: BankAccounts) => {
     setIsNewAccountModalVisible((prevState: boolean) => !prevState);
-    if (isEditing !== undefined) {
-      setIsEditing(isEditing);
+    setAccountBeingEdited(null)
+    setIsEditModal(false)
+    if(bankAccount){
+      setIsEditModal(true)
+      setAccountBeingEdited(bankAccount)
     }
   }, []);
 
@@ -49,10 +55,12 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
         newTransactionType,
        toggleValuesVisibility,
        isNewAccountModalVisible,
-       toggleNewAccountModalVisibility,
        isTransactionModalVisible,
-       isEditing,
-       toggleTransactionModalVisility }}>
+       toggleTransactionModalVisility,
+       accountBeingEdited,
+       isEditModal,
+       toggleNewAccountModalVisibility
+        }}>
       {children}
     </DashboardContext.Provider>
   );

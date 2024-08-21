@@ -23,7 +23,7 @@ export function Fab(){
           <Income/>
           Nova Receita
         </DropdownMenu.Item>
-        <DropdownMenu.Item onSelect={() => toggleNewAccountModalVisibility(false)}>
+        <DropdownMenu.Item onSelect={() => toggleNewAccountModalVisibility()}>
           <BankAccountIcon/>
           Nova Conta
         </DropdownMenu.Item>

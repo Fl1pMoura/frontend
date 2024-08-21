@@ -16,7 +16,7 @@ export function AccountCard({ data }: AccountCardProps){
     className="bg-white rounded-2xl p-4 border-b-4 border-violet-600 min-h-[200px] flex flex-col justify-between"
     style={{borderColor: color}}
     role="button"
-    onClick={() => toggleNewAccountModalVisibility(true)}
+    onClick={() => toggleNewAccountModalVisibility(data)}
     >
       <div>
         <BankAccountTypeIcon type={type}/>

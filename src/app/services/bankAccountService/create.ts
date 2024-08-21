@@ -1,14 +1,14 @@
 import { httpClient } from "../httpClient";
 
- export interface createParams {
+ export interface createBankAccountParams {
   name: string,
   initialBalance: number,
   type: "CHECKING" | "INVESTMENT" | "CASH",
   color: string
 }
 
-export async function create(params: createParams){
-  const { data } = await httpClient.post<createParams>("/bank-accounts", params);
+export async function create(params: createBankAccountParams){
+  const { data } = await httpClient.post<createBankAccountParams>("/bank-accounts", params);
 
   return data;
 }
