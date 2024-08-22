@@ -34,7 +34,7 @@ export function Accounts(){
                 )}>
                   {formatCurrency(currentBalance)}
               </strong>
-              <button onClick={toggleValuesVisibility} className="p-2">
+              <button onClick={() => toggleValuesVisibility} className="p-2">
                 <EyeIcon open={!areValuesVisible}/>
               </button>
             </div>
@@ -43,7 +43,7 @@ export function Accounts(){
               {accounts.length === 0 && (
                 <div className="mb-4" slot="container-start">
                   <strong className="tracking-[-1px] text-lg">Minhas Contas</strong>
-                  <button onClick={toggleNewAccountModalVisibility} className='w-full px-4 py-12 border-2 border-dashed border-teal-600 rounded-2xl mt-4 flex flex-col items-center justify-center gap-4'>
+                  <button onClick={() => toggleNewAccountModalVisibility} className='w-full px-4 py-12 border-2 border-dashed border-teal-600 rounded-2xl mt-4 flex flex-col items-center justify-center gap-4'>
                     <div className='w-11 h-11 border-2 border-dashed border-white rounded-full flex items-center justify-center text-white'>
                       <PlusIcon className='w-6 h-6'/>
                     </div>

@@ -31,7 +31,7 @@ export function Modal({ children, open, title, rightAction, onClose}: ModalProps
                 <Cross2Icon className='size-6'/>
               </button>
               <RdxDialog.Title className='text-lg font-bold tracking-[-1px]'>{ title }</RdxDialog.Title>
-              <button className='size-12 flex items-center justify-center outline-none'>{rightAction}</button>
+              <div className='size-12 flex items-center justify-center outline-none'>{rightAction}</div>
             </header>
             <div>
               { children }

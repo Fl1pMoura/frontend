@@ -21,7 +21,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function useNewAccountModal() {
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(true)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const queryClient = useQueryClient();
   const {
     toggleNewAccountModalVisibility,
@@ -70,6 +70,14 @@ export function useNewAccountModal() {
     },
   });
 
+  const { mutateAsync: removeAccount, isPending: isPendingDelete } = useMutation({
+    mutationFn: async (bankAccountId: string) => {
+      if (isEditModal) {
+        return bankAccountService.remove(bankAccountId);
+      }
+    },
+  });
+
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
       const updatedData = {
@@ -80,6 +88,7 @@ export function useNewAccountModal() {
       await mutateAsync(updatedData);
 
       queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
+
       if(isEditModal){
         toast.success("A conta foi editada com sucesso!");
       }else{
@@ -87,7 +96,7 @@ export function useNewAccountModal() {
       }
       toggleNewAccountModalVisibility();
       reset();
-    } catch (error) {
+    } catch {
       if(isEditModal){
         toast.error("Houve um erro ao realizar alterações!");
       }else{
@@ -100,6 +109,20 @@ export function useNewAccountModal() {
     setIsDeleteModalVisible(prevState => !prevState)
   }
 
+  async function handleConfirmDeleteBankAccount(){
+    try {
+      await removeAccount(accountBeingEdited!.id);
+
+      queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
+
+      toast.success("A conta foi deletada com sucesso!");
+      toggleNewAccountModalVisibility();
+      reset();
+    } catch {
+        toast.error("Houve um erro ao deletar a conta!");
+    }
+  }
+
   return {
     isEditModal,
     toggleNewAccountModalVisibility,
@@ -110,6 +133,8 @@ export function useNewAccountModal() {
     control,
     isPending,
     toggleDeleteModalVisibility,
-    isDeleteModalVisible
+    isDeleteModalVisible,
+    handleConfirmDeleteBankAccount,
+    isPendingDelete
   };
 }

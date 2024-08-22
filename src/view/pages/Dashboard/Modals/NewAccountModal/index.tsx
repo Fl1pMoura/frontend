@@ -10,10 +10,12 @@ import { Select } from "../../../../components/Select";
 import { useNewAccountModal } from "./useNewAccountModal";
 
 export function NewAccountModal(){
-  const { isNewAccountModalVisible, toggleNewAccountModalVisibility, errors, handleSubmit, register, control, isPending, isEditModal, isDeleteModalVisible, toggleDeleteModalVisibility } = useNewAccountModal();
+  const { isNewAccountModalVisible, toggleNewAccountModalVisibility, errors, handleSubmit, register, control, isPending, isEditModal, isDeleteModalVisible, toggleDeleteModalVisibility, handleConfirmDeleteBankAccount, isPendingDelete } = useNewAccountModal();
 
   if(isEditModal && isDeleteModalVisible ){
     return <ConfirmDeleteModal
+            isLoading={isPendingDelete}
+            onConfirm={handleConfirmDeleteBankAccount}
             title="Tem certeza que deseja excluir esta conta?"
             description="Ao excluir a conta, também serão excluídos todos os registros de receita e despesas relacionados."
             onClose={toggleDeleteModalVisibility}/>
