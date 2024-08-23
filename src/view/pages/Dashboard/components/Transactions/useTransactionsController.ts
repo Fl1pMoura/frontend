@@ -7,11 +7,11 @@ export function useTransactionsController(){
 
   const { areValuesVisible } = useDashboard();
 
-  const { transactions } = useTransactions();
+  const { transactions, isFetching, isInitialFetching } = useTransactions();
 
   function handleModalVisibility(){
     setIsModalVisible(prevStatate => !prevStatate)
   }
 
-  return {areValuesVisible, isInitialFetching: false, isFetching: false ,transactions, isModalVisible, handleModalVisibility, }
+  return {areValuesVisible, isInitialFetching, isFetching ,transactions, isModalVisible, handleModalVisibility,  }
 }
