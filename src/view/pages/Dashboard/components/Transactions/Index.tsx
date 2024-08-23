@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { MONTHS } from "../../../../../app/config/constants";
 import { cn } from "../../../../../app/utils/cn";
 import { formatCurrency } from "../../../../../app/utils/formatCurrency";
+import { formatDate } from "../../../../../app/utils/formatDate";
 import emptyStateImage from "../../../../../assets/empty-state.svg";
 import { Spinner } from "../../../../components/Spinner";
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
@@ -13,7 +14,7 @@ import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { useTransactionsController } from "./useTransactionsController";
 
 export function Transactions(){
-  const { areValuesVisible, isInitialFetching, transactions, isFetching, handleModalVisibility, isModalVisible } = useTransactionsController();
+  const { areValuesVisible, isInitialFetching, transactions, isFetching, handleModalVisibility, isModalVisible} = useTransactionsController();
 
   return (
     <div className="w-full h-full bg-gray-100 rounded-2xl px-4 pt-6 pb-[136px] lg:p-10 max-h-full flex flex-col">
@@ -64,32 +65,24 @@ export function Transactions(){
 
           {(transactions.length > 0 && !isFetching) && (
               <ul className="space-y-2 overflow-y-auto flex-1">
-              <li className="w-full rounded-2xl bg-white p-4 flex justify-between gap-4 items-center">
-                <div className="flex gap-3">
-                  <CategoryIcon type="expense" category="food"/>
-                  <div>
-                    <strong className="text-gray-800 tracking-[-0.5px] block">Almoço</strong>
-                    <span className="text-gray-600">04/06/2023</span>
-                  </div>
-                </div>
-                <span className={cn(
-                  "font-medium tracking-[-0.5px] text-red-800 transition-all",
-                  !areValuesVisible && "blur-sm"
-                  )}>
-                  {formatCurrency(123)}
-                </span>
-              </li>
-
-              <li className="w-full rounded-2xl bg-white p-4 flex justify-between gap-4 items-center">
-                <div className="flex gap-3">
-                  <CategoryIcon type="income"/>
-                  <div>
-                    <strong className="text-gray-800 tracking-[-0.5px] block">Almoço</strong>
-                    <span className="text-gray-600">04/06/2023</span>
-                  </div>
-                </div>
-                <span className="font-medium tracking-[-0.5px] text-green-800">{formatCurrency(123)}</span>
-              </li>
+                {transactions.map( transaction => (
+                    <li key={transaction.id} className="w-full rounded-2xl bg-white p-4 flex justify-between gap-4 items-center">
+                    <div className="flex gap-3">
+                      <CategoryIcon type={transaction.type} category={transaction.category?.name}/>
+                      <div>
+                        <strong className="text-gray-800 tracking-[-0.5px] block">{transaction.name}</strong>
+                        <span className="text-gray-600">{formatDate(new Date(transaction.date))}</span>
+                      </div>
+                    </div>
+                    <span className={cn(
+                      "font-medium tracking-[-0.5px] transition-all",
+                      transaction.type === "EXPENSE"?"text-red-800":"text-green-800",
+                      !areValuesVisible && "blur-sm"
+                      )}>
+                      {transaction.type === "EXPENSE"?"-":"+"}{formatCurrency(transaction.value)}
+                    </span>
+                  </li>
+                ))}
               </ul>
           )}
         </>
