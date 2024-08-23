@@ -1,8 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
+import { useBankAccounts } from "../../../../../app/hooks/useBankAccounts";
 import { useWindowWidth } from "../../../../../app/hooks/useWindowWidth";
-import { bankAccountService } from "../../../../../app/services/bankAccountService";
-import { GetAllBankAccountResponse } from "../../../../../app/services/bankAccountService/getAll";
 import { useDashboard } from "../DashboardContext/useDashboard";
 
 export function useAccountController(){
@@ -14,16 +12,11 @@ export function useAccountController(){
 
   const { areValuesVisible, toggleValuesVisibility} = useDashboard();
 
-  const { data, isFetching } = useQuery<GetAllBankAccountResponse>({
-    queryKey: ['bankAccounts'],
-    queryFn: bankAccountService.getAll
-  })
+  const { accounts, isFetching } = useBankAccounts()
 
   const currentBalance = useMemo(() => {
-    if(!data) return 0;
+    return accounts.reduce((total, account) => total + account.currentBalance ,0)
+  } , [accounts])
 
-    return data.reduce((total, account) => total + account.currentBalance ,0)
-  } , [data])
-
-  return {currentBalance , sliderState, setSliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isFetching, accounts: data ?? []}
+  return {currentBalance , sliderState, setSliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isFetching, accounts}
 }

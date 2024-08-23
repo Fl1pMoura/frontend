@@ -8,7 +8,7 @@ export interface DashboardContextValue {
   isTransactionModalVisible: boolean,
   newTransactionType: "INCOME" | "EXPENSE" | null,
   toggleNewAccountModalVisibility(bankAccount?: BankAccounts): void,
-  toggleTransactionModalVisility(type: "INCOME" | "EXPENSE"): void,
+  toggleTransactionModalVisility(type?: "INCOME" | "EXPENSE"): void,
   accountBeingEdited: null | BankAccounts
   isEditModal: boolean
 }

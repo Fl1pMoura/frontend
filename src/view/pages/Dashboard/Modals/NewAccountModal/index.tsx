@@ -86,7 +86,7 @@ export function NewAccountModal(){
           />
 
         </div>
-        <Button isLoading={isPending} disabled={false} className="w-full h-14 mt-6">
+        <Button isLoading={isPending} disabled={isPending} className="w-full h-14 mt-6">
               Salvar
         </Button>
       </form>

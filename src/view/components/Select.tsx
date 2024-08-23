@@ -25,7 +25,7 @@ export function Select({ className, error, placeholder, options, onChange, value
 
   return(
     <div>
-        <div className="relative">
+        <div className="relative max-h-52">
             <RdxSelect.Root value={value} onValueChange={handleSelect}>
                 <RdxSelect.Trigger
                 className={cn(
@@ -41,11 +41,11 @@ export function Select({ className, error, placeholder, options, onChange, value
                 </RdxSelect.Trigger>
 
                 <RdxSelect.Portal>
-                  <RdxSelect.Content className="z-[99] overflow-hidden bg-white relative rounded-2xl border border-gray-100 w-full max-w-[352px] shadow-[0px_11px_20px_0px_#0000001A]">
+                  <RdxSelect.Content className="z-[99] overflow-hidden bg-white relative rounded-2xl border border-gray-100 w-full max-w-[352px] shadow-[0px_11px_20px_0px_#0000001A] ">
                     <RdxSelect.ScrollUpButton className="flex items-center justify-center h-[25px] bg-white text-gray-800 cursor-default">
                       <ChevronUpIcon />
                     </RdxSelect.ScrollUpButton>
-                    <RdxSelect.Viewport className="p-2 w-full space-y-2">
+                    <RdxSelect.Viewport className="p-2 w-full space-y-2 h-full">
                       {options.map(option => (
                           <RdxSelect.Item
                           key={option.value}
