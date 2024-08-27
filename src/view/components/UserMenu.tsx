@@ -4,11 +4,11 @@ import { DropdownMenu } from "./DropdownMenu";
 
 
 export function UserMenu(){
-  const { signout } = useAuth();
+  const { signout, user } = useAuth();
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className=" bg-teal-50 rounded-full cursor-pointer h-12 w-12 flex items-center justify-center border border-teal-100 select-none">
-        <span className="text-sm text-teal-900 text-center tracking-[-0.5px] font-medium">FM</span>
+        <span className="text-sm text-teal-900 text-center tracking-[-0.5px] font-medium uppercase">{user?.name.slice(0,2)}</span>
       </DropdownMenu.Trigger >
 
         <DropdownMenu.Content sideOffset={4} className="w-32">

@@ -97,6 +97,7 @@ export function useNewTransactionModal(){
       await mutateAsync(updatedData);
 
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["bankAccounts"] });
 
       if(isEditModal){
         toast.success(newTransactionType === "EXPENSE"?"Despesa alterada com sucesso!":"Receita alterada com sucesso!");

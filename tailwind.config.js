@@ -199,6 +199,9 @@ export default {
         'bounce-slow': 'bounce 2s infinite',
       },
     },
+    fontFamily: {
+      sans: ['DM Sans', 'sans-serif']
+    }
   },
   plugins: [],
 }
