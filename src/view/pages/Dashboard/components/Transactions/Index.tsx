@@ -14,8 +14,8 @@ import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { useTransactionsController } from "./useTransactionsController";
 
 export function Transactions(){
-  const { areValuesVisible, isInitialFetching, transactions, isFetching, handleModalVisibility, isModalVisible, handleChangeFilters, filters, handleApplyFilters} = useTransactionsController();
-
+  const { areValuesVisible, isInitialFetching, transactions, isFetching, handleModalVisibility, isModalVisible, handleChangeFilters, filters, handleApplyFilters, toggleTransactionModalVisility} = useTransactionsController();
+  const hasTransactions = transactions.length === 0;
   return (
     <div className="w-full h-full bg-gray-100 rounded-2xl px-4 pt-6 pb-[136px] lg:p-10 max-h-full flex flex-col">
       {isInitialFetching && (
@@ -60,7 +60,7 @@ export function Transactions(){
             </div>
           )}
 
-          {(transactions.length === 0 && !isFetching ) && (
+          {(hasTransactions && !isFetching ) && (
             <figure className="flex flex-col items-center justify-center gap-7 h-full">
               <img className="select-none" src={emptyStateImage} alt="Não encontramos nenhuma transação!" />
               <figcaption className="text-gray-700">Não encontramos nenhuma transação!</figcaption>
@@ -70,7 +70,7 @@ export function Transactions(){
           {(transactions.length > 0 && !isFetching) && (
               <ul className="space-y-2 overflow-y-auto flex-1">
                 {transactions.map( transaction => (
-                    <li key={transaction.id} className="w-full rounded-2xl bg-white p-4 flex justify-between gap-4 items-center">
+                    <li role="button" onClick={() => toggleTransactionModalVisility({transaction: transaction, type: transaction.type})} key={transaction.id} className="w-full rounded-2xl bg-white p-4 flex justify-between gap-4 items-center">
                     <div className="flex gap-3">
                       <CategoryIcon type={transaction.type} category={transaction.category?.name}/>
                       <div>

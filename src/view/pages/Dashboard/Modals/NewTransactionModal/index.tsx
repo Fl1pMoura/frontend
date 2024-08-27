@@ -1,6 +1,8 @@
 import { Controller } from "react-hook-form";
 import { Button } from "../../../../components/Button";
+import { ConfirmDeleteModal } from "../../../../components/ConfirmDeleteModal";
 import { DatePickerInput } from "../../../../components/datePickerInput";
+import { TrashIcon } from "../../../../components/icons/TrashIcon";
 import { Input } from "../../../../components/Input";
 import { InputCurrency } from "../../../../components/InputCurrency";
 import { Modal } from "../../../../components/Modal";
@@ -8,11 +10,31 @@ import { Select } from "../../../../components/Select";
 import { useNewTransactionModal } from "./useNewTransactionModal";
 
 export function NewTransactionModal(){
-  const { isTransactionModalVisible, toggleTransactionModalVisility, newTransactionType, control, errors, handleSubmit, register, accounts, categories, isLoadingTransactions } = useNewTransactionModal();
+  const { isTransactionModalVisible, toggleTransactionModalVisility, newTransactionType, control, errors, handleSubmit, register, accounts, categories, isLoadingTransactions, isEditModal, isDeleteModalVisible, toggleDeleteModalVisibility, isPendingDelete, handleConfirmDeleteTransaction} = useNewTransactionModal();
   const isExpense = newTransactionType === "EXPENSE";
 
+  if(isEditModal && isDeleteModalVisible ){
+    return <ConfirmDeleteModal
+            isLoading={isPendingDelete}
+            onConfirm={handleConfirmDeleteTransaction}
+            title={`Tem certeza que deseja excluir esta ${isExpense?"despesa":"receita"}?`}
+            onClose={toggleDeleteModalVisibility}/>
+  }
+
   return(
-    <Modal open={isTransactionModalVisible} title={isExpense ? "Nova Despesa": "Nova Receita"} onClose={toggleTransactionModalVisility}>
+    <Modal open={isTransactionModalVisible} title={
+      isEditModal
+      ? (isExpense ? "Editar Despesa" : "Editar Receita")
+      : (isExpense ? "Nova Despesa" : "Nova Receita")}
+      onClose={toggleTransactionModalVisility}
+      rightAction={isEditModal && (
+        <button onClick={toggleDeleteModalVisibility}>
+          <TrashIcon className=" size-6 text-red-900"/>
+        </button>
+      )}
+      >
+
+
       <form onSubmit={handleSubmit}>
         <div>
           <span className="text-xs text-gray-600">Valor {isExpense ? "da Despesa" : "da Receita"}</span>
@@ -65,7 +87,7 @@ export function NewTransactionModal(){
               )}
             />
         </div>
-        <Button isLoading={isLoadingTransactions} disabled={false} type="submit" className="w-full h-14 mt-6">Criar</Button>
+        <Button isLoading={isLoadingTransactions} disabled={false} type="submit" className="w-full h-14 mt-6">{isEditModal?"Salvar":"Criar"}</Button>
       </form>
     </Modal>
   )

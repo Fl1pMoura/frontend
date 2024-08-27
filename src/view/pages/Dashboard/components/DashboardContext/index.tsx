@@ -1,5 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { BankAccounts } from "../../../../../app/entities/BankAccount";
+import { Transactions } from "../../../../../app/entities/Transactions";
 
 export interface DashboardContextValue {
   areValuesVisible: boolean,
@@ -8,8 +9,9 @@ export interface DashboardContextValue {
   isTransactionModalVisible: boolean,
   newTransactionType: "INCOME" | "EXPENSE" | null,
   toggleNewAccountModalVisibility(bankAccount?: BankAccounts): void,
-  toggleTransactionModalVisility(type?: "INCOME" | "EXPENSE"): void,
+  toggleTransactionModalVisility(options?: { type?: "INCOME" | "EXPENSE", transaction?: Transactions | null }): void,
   accountBeingEdited: null | BankAccounts
+  transactionBeingEdited: null | Transactions
   isEditModal: boolean
 }
 
@@ -24,6 +26,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [isEditModal, setIsEditModal] = useState(false)
   const [isTransactionModalVisible, setIsTransactionModalVisible] = useState(false)
   const [accountBeingEdited, setAccountBeingEdited] = useState<null | BankAccounts>(null);
+  const [transactionBeingEdited, setTransactionBeingEdited] = useState<null | Transactions>(null);
   const [newTransactionType, setNewTransactionType] = useState<"INCOME" | "EXPENSE" | null>(null)
 
   const toggleValuesVisibility = useCallback(() => {
@@ -40,10 +43,17 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const toggleTransactionModalVisility = useCallback((type: "INCOME" | "EXPENSE") => {
-    setNewTransactionType(type)
-    setIsTransactionModalVisible((prevState: boolean) => !prevState)
-  }, [])
+  const toggleTransactionModalVisility = useCallback(({ type = "INCOME", transaction }: { type?: "INCOME" | "EXPENSE", transaction?: Transactions } = {}) => {
+    setIsTransactionModalVisible(prevState => !prevState);
+    setTransactionBeingEdited(null);
+    setNewTransactionType(type);
+    if (transaction) {
+        setIsEditModal(true);
+        setTransactionBeingEdited(transaction);
+    } else {
+        setIsEditModal(false);
+    }
+}, []);
 
   useEffect(() => {
     localStorage.setItem("areValuesVisible", JSON.stringify(areValuesVisible));
@@ -59,6 +69,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
        toggleTransactionModalVisility,
        accountBeingEdited,
        isEditModal,
+       transactionBeingEdited,
        toggleNewAccountModalVisibility
         }}>
       {children}

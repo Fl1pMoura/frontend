@@ -15,11 +15,11 @@ export function Fab(){
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Content sideOffset={4}>
-        <DropdownMenu.Item onSelect={() => toggleTransactionModalVisility("EXPENSE")}>
+        <DropdownMenu.Item onSelect={() => toggleTransactionModalVisility({type: "EXPENSE"})}>
           <Expense/>
           Nova Despesa
         </DropdownMenu.Item>
-        <DropdownMenu.Item onSelect={() => toggleTransactionModalVisility("INCOME")}>
+        <DropdownMenu.Item onSelect={() => toggleTransactionModalVisility({type:"INCOME"})}>
           <Income/>
           Nova Receita
         </DropdownMenu.Item>

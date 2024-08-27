@@ -1,6 +1,7 @@
 import { httpClient } from "../httpClient";
 
  export interface createTransactionParams {
+  id?: string
   bankAccountId: string
   categoryId: string
   name: string

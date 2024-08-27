@@ -7,7 +7,7 @@ export function useTransactionsController(){
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [filters, setFilters] = useState<TransactionsFilters>({month: new Date().getMonth(), year: new Date().getFullYear()});
 
-  const { areValuesVisible } = useDashboard();
+  const { areValuesVisible, toggleTransactionModalVisility, transactionBeingEdited } = useDashboard();
 
   function handleChangeFilters<TFilter extends keyof TransactionsFilters>(filter: TFilter){
     return (value: TransactionsFilters[TFilter]) => {
@@ -35,5 +35,5 @@ export function useTransactionsController(){
     setIsModalVisible(prevStatate => !prevStatate)
   }
 
-  return {areValuesVisible, isInitialFetching, isFetching ,transactions, isModalVisible, handleModalVisibility, handleChangeFilters, filters, handleApplyFilters}
+  return {areValuesVisible, isInitialFetching, isFetching ,transactions, isModalVisible, handleModalVisibility, handleChangeFilters, filters, handleApplyFilters, toggleTransactionModalVisility, transactionBeingEdited}
 }
