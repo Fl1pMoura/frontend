@@ -3,7 +3,7 @@ import { httpClient } from "../httpClient";
 
 export type GetAllTransactionsResponse = Array<Transactions>
 
-type TransactionsFilters = {
+export type TransactionsFilters = {
   month: number;
   year: number;
   bankAccountId?: string;

@@ -14,7 +14,7 @@ import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { useTransactionsController } from "./useTransactionsController";
 
 export function Transactions(){
-  const { areValuesVisible, isInitialFetching, transactions, isFetching, handleModalVisibility, isModalVisible} = useTransactionsController();
+  const { areValuesVisible, isInitialFetching, transactions, isFetching, handleModalVisibility, isModalVisible, handleChangeFilters, filters, handleApplyFilters} = useTransactionsController();
 
   return (
     <div className="w-full h-full bg-gray-100 rounded-2xl px-4 pt-6 pb-[136px] lg:p-10 max-h-full flex flex-col">
@@ -26,9 +26,9 @@ export function Transactions(){
 
       {!isInitialFetching && (
         <>
-          <FiltersModal handleModalVisibility={handleModalVisibility} isModalVisible={isModalVisible}/>
+          <FiltersModal onApplyFilters={handleApplyFilters} handleModalVisibility={handleModalVisibility} isModalVisible={isModalVisible}/>
           <div className="flex justify-between">
-            <TransactionTypeDropdown/>
+            <TransactionTypeDropdown onSelect={handleChangeFilters("transactionType")} selectedType={filters.transactionType} />
             <button onClick={handleModalVisibility} className="h-12 w-12 flex items-center justify-center">
               <FilterIcon/>
               </button>
@@ -38,6 +38,10 @@ export function Transactions(){
             <Swiper
               slidesPerView={3}
               centeredSlides
+              initialSlide={filters.month}
+              onSlideChange={swiper => {
+                handleChangeFilters("month")(swiper.realIndex)
+              }}
             >
               <SliderNavigation/>
               {MONTHS.map((month, index) => (

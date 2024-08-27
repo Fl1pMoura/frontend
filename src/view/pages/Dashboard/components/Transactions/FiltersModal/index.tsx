@@ -2,35 +2,22 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { cn } from "../../../../../../app/utils/cn";
 import { Button } from "../../../../../components/Button";
 import { Modal } from "../../../../../components/Modal";
-import { useFiltersModal } from "./useFiltersModal";
+import { useFiltersModalController } from "./useFiltersModalController";
 
 interface FiltersModalProps{
   isModalVisible: boolean,
   handleModalVisibility(): void,
+  onApplyFilters(filters: {bankAccountId: string | undefined , year: number}): void
 }
 
-export function FiltersModal({ isModalVisible, handleModalVisibility}: FiltersModalProps){
-  const { handleSelectedBankAccount, selectedBankAccountId, handleSelectedYear, selectedYear } = useFiltersModal();
-  const bankAccounts = [
-    {
-      id: "123",
-      name: "Nubank",
-    },
-    {
-      id: "456",
-      name: "Xp Investimentos",
-    },
-    {
-      id: "789",
-      name: "Dinheiro",
-    },
-  ]
+export function FiltersModal({ isModalVisible, handleModalVisibility, onApplyFilters}: FiltersModalProps){
+  const { handleSelectedBankAccount, selectedBankAccountId, handleSelectedYear, selectedYear, accounts } = useFiltersModalController();
   return(
     <Modal open={ isModalVisible } onClose={ handleModalVisibility } title="Filtros" >
       <div className="text-gray-800">
         <span className='text-lg font-bold tracking-[-1px]'>Contas</span>
         <div className="space-y-2 mt-2">
-          {bankAccounts.map(account => (
+          {accounts.map(account => (
             <button
             key={account.id}
             onClick={() => handleSelectedBankAccount(account.id)}
@@ -64,7 +51,7 @@ export function FiltersModal({ isModalVisible, handleModalVisibility}: FiltersMo
         </div>
       </div>
 
-      <Button className="w-full min-h-14">Aplicar Filtros</Button>
+      <Button className="w-full min-h-14" onClick={() => onApplyFilters({bankAccountId: selectedBankAccountId, year: selectedYear})}>Aplicar Filtros</Button>
     </Modal>
   )
 }
